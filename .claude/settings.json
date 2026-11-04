@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm:*)",
+      "Bash(node:*)",
+      "Bash(npx tsx:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git worktree:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker build:*)",
+      "Bash(docker ps:*)",
+      "Bash(rg:*)",
+      "Bash(curl -s http://localhost:*)",
+      "Bash(bash scripts/smoke.sh:*)"
+    ],
+    "deny": [
+      "Read(./**/node_modules/**)",
+      "Read(./**/dist/**)",
+      "Read(./**/coverage/**)",
+      "Read(./pnpm-lock.yaml)",
+      "Read(./.env)",
+      "Read(./**/.env)",
+      "Bash(git push --force:*)"
+    ]
+  }
+}

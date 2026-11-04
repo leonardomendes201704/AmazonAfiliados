@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amazon Afiliados · Produtos Mais Vendidos</title>
+  <!--
+    Protótipo: afiliados-amazon
+    Referência: referencia.png (1600x900 px) | largura de design: 1600 px | fator: 1.000
+    Gerado em 04/11/2026 via /prototipo
+    Suposições:
+    - Fotos dos produtos viraram ilustrações SVG simples e sem marcas (mesma posição e proporção).
+    - Logo real da Amazon (o "a" com sorriso) trocado por ícones neutros: sacola no botão "Ver na Amazon"
+      e o carrinho do próprio site na sacola do topo. O selo "prime" virou texto simples.
+    - Estrelas padronizadas pela nota (arredondada para baixo em meia estrela): todas 4,5.
+    - Cards das duas linhas com a mesma altura (a imagem espremia a 2ª linha); a página continua com 900 px.
+    - Categorias do menu lateral e do dropdown do header filtram os cards; a busca filtra pelo nome.
+      Os checkboxes e a faixa de preço só mudam de estado (as contagens da imagem não batem com 10 produtos).
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Versões fixadas e testadas. Não troque sem validar no navegador. -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@1.49.0/dist/umd/lucide.min.js"></script>
+
+  <style type="text/tailwindcss">
+    /* Tokens extraídos da imagem. Toda cor da tela sai daqui: nada de bg-[#hex] no markup. */
+    @theme static {
+      --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+
+      --text-hero: 2.9375rem; --text-hero--line-height: 3rem;          /* 47 px: título da página */
+      --text-logo: 1.8125rem; --text-logo--line-height: 2rem;          /* 29 px: nome do site */
+      --text-card: 1rem;      --text-card--line-height: 1.0625rem;     /* 16/17 px: nome do produto */
+      --text-section: 1.0625rem; --text-section--line-height: 1.5rem;  /* 17 px: títulos da sidebar */
+      --text-meta: 0.8125rem; --text-meta--line-height: 1rem;          /* 13 px: selos, avaliações, subtítulo do logo */
+
+      --color-background: #fbfbfb;        /* fundo da página */
+      --color-surface: #ffffff;           /* cards, sidebar, barra de selos */
+      --color-surface-muted: #f5f5f6;     /* hover de item */
+      --color-border: #ebebeb;            /* bordas e divisórias */
+      --color-input: #d9d9db;             /* borda de campos e checkboxes, estrela vazia */
+      --color-foreground: #111726;        /* texto principal (azul-marinho quase preto) */
+      --color-secondary-foreground: #3a3d44; /* rótulos de filtro, nota, coração */
+      --color-muted-foreground: #63666b;  /* subtítulo, contagens, preço antigo */
+      --color-placeholder: #808285;
+
+      --color-header: #171f2e;            /* barra superior */
+      --color-header-accent: #353d4d;     /* item ativo do menu superior */
+      --color-header-border: #3a4252;
+      --color-header-foreground: #f5f8fc;
+      --color-header-muted: #c3cad5;
+
+      --color-cream: #f8f2ec;             /* tom creme do topo */
+
+      --color-primary: #fb8209;           /* laranja: botões, selos, destaques */
+      --color-primary-light: #fd9010;     /* topo do degradê dos botões */
+      --color-primary-deep: #ee7316;      /* base do degradê dos botões */
+      --color-primary-hover: #e86a0c;
+      --color-primary-foreground: #ffffff;
+
+      --color-danger: #e83b3e;            /* selo de desconto, favorito */
+      --color-rating: #f6c21f;            /* estrelas */
+      --color-info: #1b9ad6;              /* prime */
+
+      --radius-control: 0.5rem;           /* botões, campos, selos */
+      --radius-card: 0.875rem;            /* cards, sidebar */
+
+      --shadow-card: 0 2px 8px 0 rgb(17 23 38 / 0.06);
+    }
+
+    @layer base {
+      [x-cloak] { display: none !important; }
+      body { -webkit-font-smoothing: antialiased; }
+      :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+      input[type="search"]::-webkit-search-cancel-button { display: none; }
+    }
+  </style>
+</head>
+<body x-data="loja()" class="bg-background font-sans text-foreground">
+
+  <!-- ===== Header ===== -->
+  <header class="relative z-30 bg-header text-header-foreground" @keydown.escape.window="menuAberto = false">
+    <div class="flex h-19 items-center pb-1 pl-4 pr-4 sm:pl-9 sm:pr-8">
+      <a href="#" class="flex shrink-0 items-center gap-3 sm:gap-4 lg:mr-6" aria-label="Amazon Afiliados, página inicial">
+        <i data-lucide="shopping-cart" class="size-10 text-primary sm:size-11" stroke-width="1.75"></i>
+        <span class="flex flex-col">
+          <span class="whitespace-nowrap text-2xl font-extrabold sm:text-logo">Amazon <span class="text-primary">Afiliados</span></span>
+          <span class="hidden whitespace-nowrap text-meta text-header-muted sm:block">Os produtos mais vendidos da Amazon em um só lugar</span>
+        </span>
+      </a>
+
+      <span class="ml-0 mr-10 hidden h-9 w-px bg-header-border 2xl:block" aria-hidden="true"></span>
+
+      <nav class="hidden items-center gap-3 2xl:flex" aria-label="Principal">
+        <a href="#" @click.prevent="navAtiva = 'inicio'; categoria = 'todas'"
+           :class="navAtiva === 'inicio' ? 'bg-header-accent' : 'hover:bg-header-accent/60'"
+           class="flex h-10.5 items-center gap-2 rounded-control px-4 text-base font-bold whitespace-nowrap transition-colors">
+          <span :class="navAtiva === 'inicio' ? 'text-primary [&_svg]:fill-current' : ''"><i data-lucide="house" class="size-6"></i></span>
+          Início
+        </a>
+
+        <div x-data="{ aberto: false }" class="relative" @keydown.escape.window="aberto = false">
+          <button type="button" @click="aberto = !aberto" :aria-expanded="aberto"
+                  :class="aberto ? 'bg-header-accent' : 'hover:bg-header-accent/60'"
+                  class="flex h-10.5 items-center gap-2 rounded-control px-4 text-base font-bold whitespace-nowrap transition-colors">
+            <i data-lucide="layout-grid" class="size-6"></i>
+            Categorias
+            <span :class="aberto && 'rotate-180'" class="ml-1 transition-transform"><i data-lucide="chevron-down" class="size-5"></i></span>
+          </button>
+          <div x-show="aberto" x-cloak x-transition.origin.top.left @click.outside="aberto = false"
+               class="absolute left-0 z-40 mt-2 w-64 rounded-card border border-border bg-surface p-1.5 text-foreground shadow-lg">
+            <template x-for="c in categorias" :key="c.id">
+              <a href="#" @click.prevent="categoria = c.id; aberto = false"
+                 :class="categoria === c.id ? 'bg-primary/15 font-bold' : 'hover:bg-surface-muted'"
+                 class="flex h-9 items-center gap-3 rounded-control px-2.5 text-sm font-semibold">
+                <span x-text="c.nome"></span>
+              </a>
+            </template>
+          </div>
+        </div>
+
+        <a href="#" @click.prevent="navAtiva = 'mais-vendidos'"
+           :class="navAtiva === 'mais-vendidos' ? 'bg-header-accent' : 'hover:bg-header-accent/60'"
+           class="flex h-10.5 items-center gap-2 rounded-control px-4 text-base font-bold whitespace-nowrap transition-colors">
+          <span :class="navAtiva === 'mais-vendidos' ? 'text-primary [&_svg]:fill-current' : ''"><i data-lucide="star" class="size-6"></i></span>
+          Mais Vendidos
+        </a>
+        <a href="#" @click.prevent="navAtiva = 'ofertas'"
+           :class="navAtiva === 'ofertas' ? 'bg-header-accent' : 'hover:bg-header-accent/60'"
+           class="flex h-10.5 items-center gap-2 rounded-control px-4 text-base font-bold whitespace-nowrap transition-colors">
+          <span :class="navAtiva === 'ofertas' ? 'text-primary' : ''"><i data-lucide="tag" class="size-6"></i></span>
+          Ofertas
+        </a>
+      </nav>
+
+      <form @submit.prevent role="search"
+            class="relative ml-auto hidden h-10.5 max-w-110 flex-1 items-center overflow-hidden rounded-control bg-surface lg:flex">
+        <i data-lucide="search" class="pointer-events-none absolute left-4 size-5 text-foreground"></i>
+        <label for="busca" class="sr-only">Buscar produtos</label>
+        <input id="busca" x-model="busca" type="search" placeholder="Busque produtos na Amazon..." autocomplete="off"
+               class="h-full min-w-0 flex-1 bg-transparent pl-12 pr-3 text-base text-foreground outline-none placeholder:text-placeholder">
+        <button type="submit" class="h-full w-22 shrink-0 bg-primary text-base font-extrabold text-primary-foreground transition-colors hover:bg-primary-hover">Buscar</button>
+      </form>
+
+      <button type="button" @click="menuAberto = !menuAberto" :aria-expanded="menuAberto" aria-label="Abrir menu"
+              class="ml-auto grid size-10 place-items-center rounded-control hover:bg-header-accent lg:ml-3 2xl:hidden">
+        <span x-show="!menuAberto"><i data-lucide="menu" class="size-6"></i></span>
+        <span x-show="menuAberto" x-cloak><i data-lucide="x" class="size-6"></i></span>
+      </button>
+    </div>
+
+    <!-- Busca no celular -->
+    <form @submit.prevent role="search" class="px-4 pb-3 sm:px-8 lg:hidden">
+      <div class="relative flex h-10.5 items-center overflow-hidden rounded-control bg-surface">
+        <i data-lucide="search" class="pointer-events-none absolute left-3.5 size-5 text-foreground"></i>
+        <label for="busca-mobile" class="sr-only">Buscar produtos</label>
+        <input id="busca-mobile" x-model="busca" type="search" placeholder="Busque produtos na Amazon..." autocomplete="off"
+               class="h-full min-w-0 flex-1 bg-transparent pl-11 pr-3 text-base text-foreground outline-none placeholder:text-placeholder">
+        <button type="submit" class="h-full w-20 shrink-0 bg-primary text-base font-extrabold text-primary-foreground">Buscar</button>
+      </div>
+    </form>
+
+    <!-- Menu recolhido (abaixo de 1536 px) -->
+    <nav x-show="menuAberto" x-cloak x-transition.origin.top @click.outside="menuAberto = false"
+         class="absolute inset-x-0 top-full border-t border-header-border bg-header px-4 pb-4 pt-2 shadow-lg sm:px-8 2xl:hidden" aria-label="Principal (menu)">
+      <div class="grid gap-1 sm:grid-cols-4">
+        <template x-for="item in [['inicio','Início','house'],['categorias','Categorias','layout-grid'],['mais-vendidos','Mais Vendidos','star'],['ofertas','Ofertas','tag']]" :key="item[0]">
+          <a href="#" @click.prevent="navAtiva = item[0]; menuAberto = false"
+             :class="navAtiva === item[0] ? 'bg-header-accent' : 'hover:bg-header-accent/60'"
+             class="flex h-10.5 items-center gap-2 rounded-control px-4 text-base font-bold whitespace-nowrap">
+            <span :class="navAtiva === item[0] && 'text-primary'" x-html="icone(item[2], 'size-5')"></span>
+            <span x-text="item[1]"></span>
+          </a>
+        </template>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== Destaque (hero) ===== -->
+  <section class="relative overflow-hidden bg-linear-to-r from-cream via-surface to-cream/60">
+    <div aria-hidden="true" class="pointer-events-none absolute -top-14 right-2 hidden size-80 rounded-full bg-radial from-primary/20 via-primary/8 to-transparent to-70% xl:block"></div>
+
+    <!-- Sacola: ilustração neutra (sem logo de terceiros) -->
+    <svg viewBox="0 0 184 140" class="absolute right-26 top-4 hidden w-46 xl:block" aria-hidden="true">
+      <defs>
+        <linearGradient id="sacola-frente" x1="0" y1="0" x2=".35" y2="1">
+          <stop offset="0" stop-color="#fbdcb6"/><stop offset="1" stop-color="#efba7b"/>
+        </linearGradient>
+        <linearGradient id="sacola-lado" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#e6ac69"/><stop offset="1" stop-color="#d4924f"/>
+        </linearGradient>
+      </defs>
+      <g class="stroke-primary" stroke-width="4" stroke-linecap="round" fill="none">
+        <path d="M29 9 36 25"/><path d="M8 30 26 38"/><path d="M4 53 23 50"/>
+      </g>
+      <ellipse cx="112" cy="133" rx="62" ry="5" fill="#000" opacity=".07"/>
+      <path d="M146 15 172 24 175 121 151 132Z" fill="url(#sacola-lado)"/>
+      <path d="M47 23 146 15 151 132 51 125Z" fill="url(#sacola-frente)"/>
+      <path d="M47 23 146 15" stroke="#d99a55" stroke-width="2"/>
+      <path d="M80 22C82 4 122 -1 128 17" fill="none" stroke="#b8722f" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="80" cy="27" r="2.2" fill="#9a5d24"/><circle cx="128" cy="22" r="2.2" fill="#9a5d24"/>
+      <g class="stroke-foreground" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(73 48) scale(2.1)">
+        <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+      </g>
+    </svg>
+
+    <div class="relative px-4 pb-5 pt-6 text-center 2xl:pl-16">
+      <h1 class="text-3xl font-extrabold sm:text-hero">
+        Produtos
+        <span class="relative whitespace-nowrap text-primary">Mais Vendidos
+          <svg viewBox="0 0 110 8" class="absolute bottom-0.5 right-1 hidden h-2 w-27.5 sm:block" aria-hidden="true">
+            <path d="M2 6.5Q52 -0.5 108 4.5" fill="none" class="stroke-primary" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <svg viewBox="0 0 32 38" class="absolute -right-6 -top-2 hidden h-9.5 w-8 sm:block" aria-hidden="true">
+            <g class="stroke-primary" stroke-width="3.5" stroke-linecap="round" fill="none">
+              <path d="M5 15 8 3"/><path d="M12 22 25 12"/><path d="M15 33H30"/>
+            </g>
+          </svg>
+        </span>
+      </h1>
+      <p class="mx-auto mt-1 max-w-3xl text-lg leading-7 text-muted-foreground">Clique no produto que você gostou para ver os detalhes, avaliações e ofertas na Amazon.</p>
+
+      <ul class="mt-3 grid grid-cols-2 gap-2 rounded-card bg-surface p-2 text-left shadow-card lg:inline-grid lg:h-11 lg:grid-flow-col lg:grid-cols-none lg:items-center lg:gap-0 lg:rounded-full lg:p-0">
+        <li class="flex items-center gap-3 px-3 py-1.5 text-sm font-bold text-foreground lg:px-7 lg:py-0">
+          <i data-lucide="shield-check" class="size-7 shrink-0 text-primary" stroke-width="1.75"></i>Ofertas reais da Amazon
+        </li>
+        <li aria-hidden="true" class="hidden h-6 w-px bg-border lg:block"></li>
+        <li class="flex items-center gap-3 px-3 py-1.5 text-sm font-bold text-foreground lg:px-7 lg:py-0">
+          <i data-lucide="truck" class="size-7 shrink-0 text-primary" stroke-width="1.75"></i>Compra segura
+        </li>
+        <li aria-hidden="true" class="hidden h-6 w-px bg-border lg:block"></li>
+        <li class="flex items-center gap-3 px-3 py-1.5 text-sm font-bold text-foreground lg:px-7 lg:py-0">
+          <i data-lucide="star" class="size-7 shrink-0 text-primary" stroke-width="1.75"></i>Produtos bem avaliados
+        </li>
+        <li aria-hidden="true" class="hidden h-6 w-px bg-border lg:block"></li>
+        <li class="flex items-center gap-3 px-3 py-1.5 text-sm font-bold text-foreground lg:px-7 lg:py-0">
+          <i data-lucide="zap" class="size-7 shrink-0 fill-current text-primary" stroke-width="1.75"></i>Mais vendidos e em alta
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Conteúdo ===== -->
+  <div class="flex gap-5 px-3 pb-3 lg:pt-0">
+
+    <!-- Sidebar: fixa a partir de lg, gaveta abaixo disso -->
+    <aside :class="filtrosAbertos ? 'translate-x-0' : '-translate-x-full'"
+           class="fixed inset-y-0 left-0 z-50 w-72 overflow-y-auto bg-surface px-3 pb-6 pt-3 shadow-xl transition-transform
+                  lg:static lg:z-auto lg:w-58 lg:shrink-0 lg:translate-x-0 lg:overflow-visible lg:rounded-card lg:border lg:border-border lg:shadow-card"
+           aria-label="Categorias e filtros">
+      <div class="flex items-center justify-between lg:block">
+        <h2 class="flex h-6 items-center gap-2 px-1 text-section font-extrabold">
+          <i data-lucide="layout-grid" class="size-6" stroke-width="1.75"></i>Categorias
+        </h2>
+        <button type="button" @click="filtrosAbertos = false" aria-label="Fechar filtros"
+                class="grid size-9 place-items-center rounded-control hover:bg-surface-muted lg:hidden"><i data-lucide="x" class="size-5"></i></button>
+      </div>
+
+      <ul class="mt-3.5">
+        <template x-for="(c, i) in categorias" :key="c.id">
+          <li :class="i === 0 && 'mb-1'">
+            <a href="#" @click.prevent="categoria = c.id; filtrosAbertos = false"
+               :class="categoria === c.id ? 'bg-primary/15' : 'hover:bg-surface-muted'"
+               :aria-current="categoria === c.id && 'page'"
+               class="flex h-8 items-center gap-3 rounded-control px-2 text-sm font-bold whitespace-nowrap transition-colors">
+              <span :class="categoria === c.id ? 'text-primary [&_svg]:fill-current [&_svg]:stroke-primary' : 'text-foreground'"
+                    x-html="icone(c.icone, 'size-6', 1.75)"></span>
+              <span x-text="c.nome"></span>
+            </a>
+          </li>
+        </template>
+      </ul>
+
+      <hr class="mx-1 mt-5 border-border">
+
+      <h2 class="mt-4 flex h-6 items-center gap-2 px-1 text-section font-extrabold">
+        <i data-lucide="sliders-horizontal" class="size-6" stroke-width="1.75"></i>Filtrar por
+      </h2>
+
+      <div class="pl-2">
+        <p class="mt-5 text-sm font-bold">Faixa de preço</p>
+        <div class="mt-2 flex items-center gap-2">
+          <label class="sr-only" for="preco-min">Preço mínimo</label>
+          <input id="preco-min" x-model="precoMin" inputmode="numeric" placeholder="R$ 0"
+                 class="h-8 min-w-0 flex-1 rounded-control border border-input bg-surface px-2.5 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-3 focus:ring-primary/15">
+          <span class="text-sm font-semibold text-muted-foreground">até</span>
+          <label class="sr-only" for="preco-max">Preço máximo</label>
+          <input id="preco-max" x-model="precoMax" inputmode="numeric" placeholder="R$ 5.000"
+                 class="h-8 min-w-0 flex-1 rounded-control border border-input bg-surface px-2.5 text-sm outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-3 focus:ring-primary/15">
+        </div>
+
+        <ul class="mt-3">
+          <template x-for="f in filtros" :key="f.id">
+            <li>
+              <label class="flex h-7.5 cursor-pointer items-center gap-3 text-sm text-secondary-foreground">
+                <input type="checkbox" x-model="f.marcado" class="peer sr-only">
+                <span class="grid size-5 shrink-0 place-items-center rounded border border-input bg-surface transition-colors
+                             peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-primary/40 [&_svg]:opacity-0 peer-checked:[&_svg]:opacity-100">
+                  <i data-lucide="check" class="size-3.5 text-primary-foreground" stroke-width="3.5"></i>
+                </span>
+                <span>
+                  <span :class="f.id === 'prime' ? 'font-extrabold text-info' : ''" x-text="f.nome"></span>
+                  <span x-text="`(${f.qtd})`"></span>
+                </span>
+              </label>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </aside>
+    <div x-show="filtrosAbertos" x-cloak x-transition.opacity @click="filtrosAbertos = false"
+         class="fixed inset-0 z-40 bg-black/40 lg:hidden"></div>
+
+    <!-- Grade de produtos -->
+    <main class="min-w-0 flex-1 pt-3 lg:pt-0">
+      <div class="mb-3 flex items-center justify-between gap-3 lg:hidden">
+        <button type="button" @click="filtrosAbertos = true"
+                class="flex h-10 items-center gap-2 rounded-control border border-border bg-surface px-3.5 text-sm font-bold shadow-card">
+          <i data-lucide="sliders-horizontal" class="size-5"></i>Categorias e filtros
+        </button>
+        <span class="text-sm text-muted-foreground" x-text="`${filtrados.length} produtos`"></span>
+      </div>
+
+      <div class="grid grid-cols-1 gap-3 min-[440px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+           x-effect="filtrados.length; $nextTick(() => lucide.createIcons())">
+        <template x-for="p in filtrados" :key="p.id">
+          <article class="@container relative flex flex-col rounded-card border border-border bg-surface px-3 pb-2.5 pt-3 shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
+            <div class="relative h-40.5">
+              <a href="#" @click.prevent="abrirOferta(p)" class="absolute inset-x-1 bottom-0 top-3 flex items-center justify-center [&_svg]:h-full [&_svg]:w-auto"
+                 :aria-label="`Ver ${p.nome} na Amazon`" x-html="ilustracoes[p.img]"></a>
+
+              <span x-show="p.maisVendido" class="absolute left-0 top-0 inline-flex h-6 items-center gap-1.5 rounded-control bg-primary px-2 text-meta font-bold text-primary-foreground">
+                <i data-lucide="crown" class="size-5 fill-current" stroke-width="1.5"></i>Mais Vendido
+              </span>
+              <span x-show="p.precoAntigo" class="absolute left-0 top-0 inline-flex h-7.5 items-center rounded-control bg-danger px-2.5 text-base font-extrabold text-primary-foreground"
+                    x-text="`-${desconto(p)}%`"></span>
+
+              <button type="button" @click="alternarFavorito(p.id)" :aria-pressed="favoritos.includes(p.id)"
+                      :aria-label="favoritos.includes(p.id) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'"
+                      :class="favoritos.includes(p.id) ? 'text-danger [&_svg]:fill-current' : 'text-secondary-foreground hover:text-danger'"
+                      class="absolute -right-0.5 top-0 grid size-8 place-items-center rounded-full transition-colors">
+                <i data-lucide="heart" class="size-6" stroke-width="1.5"></i>
+              </button>
+            </div>
+
+            <h3 class="pl-2 text-card font-bold">
+              <a href="#" @click.prevent="abrirOferta(p)" class="line-clamp-2 hover:text-primary-hover">
+                <span x-text="p.linhas[0]"></span> <br class="hidden @min-[229px]:inline"><span x-text="p.linhas[1]"></span>
+              </a>
+            </h3>
+
+            <div class="mt-2 flex h-4 items-center gap-2.5 px-2">
+              <div class="relative flex shrink-0" :aria-label="`Nota ${p.nota.toLocaleString('pt-BR')} de 5`" role="img">
+                <div class="flex text-input">
+                  <template x-for="n in 5"><i data-lucide="star" class="size-4 fill-current stroke-none"></i></template>
+                </div>
+                <div class="absolute inset-y-0 left-0 flex overflow-hidden text-rating" :style="`width: ${estrelas(p.nota) / 5 * 100}%`">
+                  <template x-for="n in 5"><i data-lucide="star" class="size-4 shrink-0 fill-current stroke-none"></i></template>
+                </div>
+              </div>
+              <p class="whitespace-nowrap text-meta">
+                <span class="font-semibold text-secondary-foreground" x-text="p.nota.toLocaleString('pt-BR', { minimumFractionDigits: 1 })"></span>
+                <span class="text-muted-foreground" x-text="`(${num(p.avaliacoes)})`"></span>
+              </p>
+            </div>
+
+            <div class="flex items-baseline gap-4 px-2">
+              <span class="whitespace-nowrap text-lg font-extrabold leading-6" x-text="brl(p.preco)"></span>
+              <span x-show="p.precoAntigo" class="whitespace-nowrap text-sm text-muted-foreground line-through" x-text="p.precoAntigo && brl(p.precoAntigo)"></span>
+            </div>
+
+            <a href="#" @click.prevent="abrirOferta(p)"
+               class="relative mt-1.5 flex h-9 items-center justify-center gap-4 rounded-control bg-linear-to-b from-primary-light to-primary-deep text-sm font-bold whitespace-nowrap text-primary-foreground shadow-sm transition hover:from-primary hover:to-primary-hover">
+              <i data-lucide="shopping-bag" class="size-5"></i>Ver na Amazon
+              <i data-lucide="chevron-right" class="absolute right-5 size-4" stroke-width="2.75"></i>
+            </a>
+          </article>
+        </template>
+      </div>
+
+      <div x-show="!filtrados.length" x-cloak class="grid place-items-center rounded-card border border-dashed border-input bg-surface px-6 py-16 text-center">
+        <i data-lucide="search-x" class="size-10 text-muted-foreground" stroke-width="1.5"></i>
+        <p class="mt-3 font-bold">Nenhum produto encontrado</p>
+        <p class="mt-1 text-sm text-muted-foreground">Tente outra categoria ou outro termo de busca.</p>
+        <button type="button" @click="categoria = 'todas'; busca = ''" class="mt-4 h-9 rounded-control bg-primary px-4 text-sm font-bold text-primary-foreground hover:bg-primary-hover">Ver todos os produtos</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Aviso de simulação -->
+  <div x-show="aviso" x-cloak x-transition.opacity role="status"
+       class="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-control bg-header px-4 py-3 text-sm font-semibold text-header-foreground shadow-lg">
+    <i data-lucide="external-link" class="size-4 text-primary"></i><span x-text="aviso"></span>
+  </div>
+
+  <script>
+    // Cor de um token (#rrggbb), opcionalmente com transparência.
+    function cor(nome, alfa = 1) {
+      const v = getComputedStyle(document.documentElement).getPropertyValue('--color-' + nome).trim();
+      if (alfa === 1 || !/^#[0-9a-f]{6}$/i.test(v)) return v;
+      const n = parseInt(v.slice(1), 16);
+      return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${alfa})`;
+    }
+    const brl = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const num = v => v.toLocaleString('pt-BR');
+    const normalizar = s => s.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+
+    // Ilustrações dos produtos: placeholders das fotos, sem marcas (cores próprias, fora dos tokens).
+    const ilustracoes = {
+      echo: `<svg viewBox="0 0 200 160"><defs>
+          <radialGradient id="il-echo" cx=".38" cy=".3" r=".75"><stop offset="0" stop-color="#6e6f74"/><stop offset=".55" stop-color="#3b3c40"/><stop offset="1" stop-color="#18191b"/></radialGradient>
+          <pattern id="il-echo-t" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".7" fill="#000" opacity=".25"/></pattern>
+          <filter id="il-echo-b" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="3"/></filter>
+          <clipPath id="il-echo-c"><rect width="200" height="140"/></clipPath></defs>
+        <ellipse cx="100" cy="150" rx="58" ry="5" fill="#000" opacity=".12"/>
+        <g clip-path="url(#il-echo-c)"><circle cx="100" cy="80" r="78" fill="url(#il-echo)"/><circle cx="100" cy="80" r="78" fill="url(#il-echo-t)"/></g>
+        <path d="M44 140h112c-6 6-14 9-56 9s-50-3-56-9z" fill="#202124"/>
+        <ellipse cx="100" cy="140" rx="54" ry="5" fill="none" stroke="#1d8fff" stroke-width="6" filter="url(#il-echo-b)"/>
+        <ellipse cx="100" cy="140" rx="54" ry="4.5" fill="none" stroke="#59c6ff" stroke-width="2.5"/></svg>`,
+      fone: `<svg viewBox="0 0 200 160"><defs>
+          <linearGradient id="il-fone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d3e42"/><stop offset="1" stop-color="#121315"/></linearGradient></defs>
+        <ellipse cx="104" cy="154" rx="62" ry="4" fill="#000" opacity=".1"/>
+        <path d="M56 116C42 44 92 8 132 16c38 8 48 46 32 88" fill="none" stroke="#1c1d20" stroke-width="13" stroke-linecap="round"/>
+        <path d="M63 104C55 52 94 22 129 28c31 6 39 36 29 66" fill="none" stroke="#45464b" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="66" cy="124" rx="23" ry="29" transform="rotate(-28 66 124)" fill="url(#il-fone)"/>
+        <ellipse cx="146" cy="112" rx="31" ry="37" transform="rotate(-14 146 112)" fill="url(#il-fone)"/>
+        <ellipse cx="149" cy="111" rx="21" ry="26" transform="rotate(-14 149 111)" fill="#26272a"/></svg>`,
+      airfryer: `<svg viewBox="0 0 200 160"><defs>
+          <linearGradient id="il-af" x1="0" x2="1"><stop offset="0" stop-color="#232427"/><stop offset=".45" stop-color="#3f4044"/><stop offset="1" stop-color="#16171a"/></linearGradient></defs>
+        <ellipse cx="100" cy="155" rx="58" ry="4" fill="#000" opacity=".12"/>
+        <path d="M54 26c0-14 8-20 22-20h48c14 0 22 6 22 20l8 116c0 6-4 10-10 10H56c-6 0-10-4-10-10z" fill="url(#il-af)"/>
+        <rect x="74" y="24" width="52" height="34" rx="7" fill="#101113"/>
+        <rect x="90" y="31" width="20" height="8" rx="1.5" fill="#f08a2b"/>
+        <g fill="#d9d9d9" opacity=".55"><circle cx="82" cy="49" r="2"/><circle cx="92" cy="49" r="2"/><circle cx="100" cy="49" r="2"/><circle cx="108" cy="49" r="2"/><circle cx="118" cy="49" r="2"/></g>
+        <path d="M48 78h104v8H48z" fill="#0f1012"/>
+        <g fill="#f5b52e"><rect x="62" y="68" width="22" height="5" rx="2" transform="rotate(-8 73 70)"/><rect x="80" y="66" width="24" height="5" rx="2" transform="rotate(6 92 68)"/><rect x="100" y="69" width="22" height="5" rx="2" transform="rotate(-5 111 71)"/><rect x="116" y="66" width="20" height="5" rx="2" transform="rotate(9 126 68)"/><rect x="70" y="73" width="60" height="6" rx="3" fill="#e9a224"/></g>
+        <rect x="46" y="86" width="108" height="56" rx="9" fill="#1d1e21"/>
+        <rect x="89" y="104" width="22" height="50" rx="7" fill="#2c2d31"/></svg>`,
+      cafeteira: `<svg viewBox="0 0 200 160"><defs>
+          <linearGradient id="il-caf" x1="0" x2="1"><stop offset="0" stop-color="#868a8f"/><stop offset=".35" stop-color="#e6e8eb"/><stop offset=".6" stop-color="#b6bac0"/><stop offset="1" stop-color="#777b80"/></linearGradient>
+          <linearGradient id="il-caf-v" x1="0" x2="1"><stop offset="0" stop-color="#2a2d31" stop-opacity=".9"/><stop offset=".5" stop-color="#6b7076" stop-opacity=".45"/><stop offset="1" stop-color="#1e2023" stop-opacity=".9"/></linearGradient></defs>
+        <ellipse cx="104" cy="155" rx="56" ry="4" fill="#000" opacity=".12"/>
+        <rect x="62" y="4" width="88" height="10" rx="4" fill="#26272a"/>
+        <rect x="64" y="12" width="84" height="48" rx="5" fill="url(#il-caf)"/>
+        <rect x="132" y="58" width="20" height="86" rx="4" fill="#1d1e21"/>
+        <rect x="64" y="58" width="84" height="16" rx="3" fill="#232427"/>
+        <path d="M68 80h60l4 52c0 6-3 9-9 9H73c-6 0-9-3-9-9z" fill="url(#il-caf-v)"/>
+        <path d="M66 106h63l3 26c0 6-3 9-9 9H73c-6 0-9-3-9-9z" fill="#1c1206" opacity=".6"/>
+        <path d="M66 88c-24 0-24 40 0 40" fill="none" stroke="#1d1e21" stroke-width="7"/>
+        <rect x="58" y="140" width="98" height="12" rx="4" fill="url(#il-caf)"/></svg>`,
+      firetv: `<svg viewBox="0 0 200 160"><defs>
+          <linearGradient id="il-tv" x1="0" x2="1"><stop offset="0" stop-color="#34353a"/><stop offset="1" stop-color="#141517"/></linearGradient></defs>
+        <ellipse cx="104" cy="154" rx="70" ry="4" fill="#000" opacity=".12"/>
+        <rect x="32" y="112" width="102" height="38" rx="5" fill="url(#il-tv)"/>
+        <path d="M62 132q20 6 40 0" fill="none" stroke="#55575c" stroke-width="2" stroke-linecap="round"/>
+        <rect x="138" y="4" width="36" height="148" rx="17" fill="url(#il-tv)"/>
+        <circle cx="156" cy="20" r="4.5" fill="#3aa0ff"/>
+        <circle cx="156" cy="46" r="14" fill="#0f1012" stroke="#46484d" stroke-width="2"/><circle cx="156" cy="46" r="6" fill="#2c2d31"/>
+        <g fill="#4a4c51"><circle cx="146" cy="72" r="3"/><circle cx="156" cy="72" r="3"/><circle cx="166" cy="72" r="3"/><circle cx="146" cy="84" r="3"/><circle cx="156" cy="84" r="3"/><circle cx="166" cy="84" r="3"/><circle cx="156" cy="98" r="3"/><circle cx="156" cy="108" r="3"/></g>
+        <rect x="149" y="122" width="14" height="6" rx="2" fill="#1d8fff"/></svg>`,
+      pulseira: `<svg viewBox="0 0 200 160">
+        <ellipse cx="104" cy="154" rx="48" ry="4" fill="#000" opacity=".1"/>
+        <path d="M112 20c40 0 50 40 46 70-4 34-18 58-46 58" fill="none" stroke="#222326" stroke-width="24" stroke-linecap="round"/>
+        <g fill="#111214"><circle cx="150" cy="66" r="2"/><circle cx="152" cy="80" r="2"/><circle cx="151" cy="94" r="2"/><circle cx="148" cy="108" r="2"/></g>
+        <rect x="68" y="16" width="54" height="128" rx="27" fill="#141517" stroke="#34353a" stroke-width="3"/>
+        <rect x="75" y="26" width="40" height="108" rx="20" fill="#000"/>
+        <circle cx="95" cy="44" r="7" fill="none" stroke="#ff5a5f" stroke-width="2.5" stroke-dasharray="30 14"/>
+        <text x="95" y="80" font-family="Nunito, sans-serif" font-weight="800" font-size="22" fill="#fff" text-anchor="middle">09</text>
+        <text x="95" y="103" font-family="Nunito, sans-serif" font-weight="800" font-size="22" fill="#fff" text-anchor="middle">28</text>
+        <circle cx="95" cy="118" r="6" fill="none" stroke="#38d39f" stroke-width="2.5" stroke-dasharray="24 14"/></svg>`,
+      garrafa: `<svg viewBox="0 0 200 160"><defs>
+          <linearGradient id="il-gar" x1="0" x2="1"><stop offset="0" stop-color="#8b9095"/><stop offset=".3" stop-color="#eceef0"/><stop offset=".55" stop-color="#c2c6ca"/><stop offset="1" stop-color="#787d82"/></linearGradient></defs>
+        <ellipse cx="100" cy="155" rx="40" ry="4" fill="#000" opacity=".12"/>
+        <path d="M80 30V12c0-5 3-8 8-8h28c5 0 8 3 8 8v34" fill="none" stroke="#7f8489" stroke-width="4"/>
+        <rect x="74" y="14" width="52" height="30" rx="7" fill="#1e4a39"/>
+        <rect x="74" y="14" width="52" height="8" rx="4" fill="#2c6650"/>
+        <rect x="76" y="42" width="48" height="8" fill="#2a2c2e"/>
+        <rect x="70" y="48" width="60" height="104" rx="10" fill="url(#il-gar)"/>
+        <rect x="88" y="80" width="24" height="14" rx="2" fill="#2a2c2e" opacity=".75"/></svg>`,
+      ringlight: `<svg viewBox="0 0 200 160"><defs>
+          <linearGradient id="il-rl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c9a8"/><stop offset=".55" stop-color="#b7714a"/><stop offset="1" stop-color="#e7ddd4"/></linearGradient>
+          <filter id="il-rl-b" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter></defs>
+        <circle cx="100" cy="58" r="49" fill="none" stroke="#ffe7b0" stroke-width="12" filter="url(#il-rl-b)" opacity=".8"/>
+        <circle cx="100" cy="58" r="49" fill="none" stroke="#fdf6e6" stroke-width="11"/>
+        <circle cx="100" cy="58" r="55" fill="none" stroke="#d8d4cc" stroke-width="1.5"/>
+        <circle cx="100" cy="58" r="43" fill="none" stroke="#e2ded6" stroke-width="1.5"/>
+        <rect x="98" y="104" width="4" height="16" fill="#1e1f22"/>
+        <rect x="86" y="34" width="28" height="50" rx="5" fill="#1e1f22"/>
+        <rect x="89" y="37" width="22" height="44" rx="3" fill="url(#il-rl)"/>
+        <rect x="93" y="118" width="14" height="9" rx="2" fill="#1e1f22"/>
+        <g stroke="#1e1f22" stroke-width="4" stroke-linecap="round"><path d="M100 124 74 156"/><path d="M100 124 126 156"/><path d="M100 124 103 156"/></g></svg>`,
+      kindle: `<svg viewBox="0 0 200 160">
+        <ellipse cx="100" cy="155" rx="50" ry="4" fill="#000" opacity=".12"/>
+        <rect x="55" y="4" width="90" height="148" rx="10" fill="#1d1e21"/>
+        <rect x="63" y="14" width="74" height="114" rx="2" fill="#f2f0e9"/>
+        <rect x="86" y="26" width="28" height="3" rx="1.5" fill="#55524b"/>
+        <g fill="#9a968e"><rect x="69" y="38" width="62" height="2" rx="1"/><rect x="69" y="44" width="58" height="2" rx="1"/><rect x="69" y="50" width="62" height="2" rx="1"/><rect x="69" y="56" width="54" height="2" rx="1"/><rect x="69" y="62" width="62" height="2" rx="1"/><rect x="69" y="68" width="60" height="2" rx="1"/><rect x="69" y="74" width="62" height="2" rx="1"/><rect x="69" y="80" width="48" height="2" rx="1"/><rect x="69" y="90" width="62" height="2" rx="1"/><rect x="69" y="96" width="58" height="2" rx="1"/><rect x="69" y="102" width="62" height="2" rx="1"/><rect x="69" y="108" width="40" height="2" rx="1"/></g>
+        <rect x="91" y="138" width="18" height="3" rx="1.5" fill="#55575c"/></svg>`,
+      robo: `<svg viewBox="0 0 200 160"><defs>
+          <radialGradient id="il-rob" cx=".45" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#eceef0"/><stop offset="1" stop-color="#cdd1d5"/></radialGradient></defs>
+        <ellipse cx="100" cy="150" rx="80" ry="6" fill="#000" opacity=".1"/>
+        <path d="M14 74a86 54 0 0 0 172 0v18a86 54 0 0 1-172 0z" fill="#d3d7db"/>
+        <path d="M40 118q60 32 120 0l2 12q-62 32-124 0z" fill="#1f2023"/>
+        <ellipse cx="100" cy="74" rx="86" ry="54" fill="url(#il-rob)" stroke="#d1d5d9" stroke-width="1.5"/>
+        <circle cx="100" cy="40" r="8" fill="#e3e6e9" stroke="#b9bec3" stroke-width="1.5"/><circle cx="100" cy="40" r="3.2" fill="#7fbf9a"/></svg>`,
+    };
+
+    function loja() {
+      return {
+        menuAberto: false,
+        filtrosAbertos: false,
+        navAtiva: 'inicio',
+        categoria: 'todas',
+        busca: '',
+        precoMin: '',
+        precoMax: '',
+        favoritos: [],
+        aviso: '',
+        categorias: [
+          { id: 'todas', nome: 'Todas as categorias', icone: 'house' },
+          { id: 'eletronicos', nome: 'Eletrônicos', icone: 'monitor' },
+          { id: 'casa', nome: 'Casa e Decoração', icone: 'house' },
+          { id: 'cozinha', nome: 'Cozinha', icone: 'cooking-pot' },
+          { id: 'acessorios', nome: 'Acessórios', icone: 'headphones' },
+          { id: 'cuidados', nome: 'Cuidados Pessoais', icone: 'heart' },
+          { id: 'esporte', nome: 'Esporte e Lazer', icone: 'dumbbell' },
+          { id: 'livros', nome: 'Livros', icone: 'book-open' },
+        ],
+        filtros: [
+          { id: 'mais-vendidos', nome: 'Mais Vendidos', qtd: 12, marcado: true },
+          { id: 'em-oferta', nome: 'Em Oferta', qtd: 18, marcado: false },
+          { id: 'bem-avaliados', nome: 'Bem Avaliados', qtd: 20, marcado: false },
+          { id: 'prime', nome: 'prime', qtd: 9, marcado: false },
+        ],
+        produtos: [
+          { id: 1, img: 'echo', categoria: 'eletronicos', linhas: ['Echo Dot (5ª Geração) –', 'Smart Speaker com Alexa'], nota: 4.8, avaliacoes: 126340, preco: 329.00, maisVendido: true },
+          { id: 2, img: 'fone', categoria: 'acessorios', linhas: ['Fone de Ouvido JBL', 'Tune 520BT – Bluetooth'], nota: 4.7, avaliacoes: 83912, preco: 159.00, precoAntigo: 219.90 },
+          { id: 3, img: 'airfryer', categoria: 'cozinha', linhas: ['Air Fryer Midea 4L –', '127V, Preta'], nota: 4.8, avaliacoes: 62781, preco: 379.90, maisVendido: true },
+          { id: 4, img: 'cafeteira', categoria: 'cozinha', linhas: ['Cafeteira Elétrica Oster', 'Inox – 30 Xícaras'], nota: 4.7, avaliacoes: 28560, preco: 239.90, precoAntigo: 299.90 },
+          { id: 5, img: 'firetv', categoria: 'eletronicos', linhas: ['Fire TV Stick HD –', 'Streaming com Alexa'], nota: 4.8, avaliacoes: 118436, preco: 299.00, maisVendido: true },
+          { id: 6, img: 'pulseira', categoria: 'cuidados', linhas: ['Smartband Xiaomi Mi Band 8', '– Monitoramento de Saúde'], nota: 4.7, avaliacoes: 49320, preco: 249.90, precoAntigo: 304.90 },
+          { id: 7, img: 'garrafa', categoria: 'esporte', linhas: ['Garrafa Térmica Stanley', 'Classic 950 ml'], nota: 4.9, avaliacoes: 37805, preco: 299.00, maisVendido: true },
+          { id: 8, img: 'ringlight', categoria: 'eletronicos', linhas: ['Ring Light 10" com Tripé –', 'Iluminação para Vídeos'], nota: 4.7, avaliacoes: 19430, preco: 119.90, precoAntigo: 159.90 },
+          { id: 9, img: 'kindle', categoria: 'livros', linhas: ['Kindle 11ª Geração –', 'Leitor Digital de Livros'], nota: 4.8, avaliacoes: 71922, preco: 599.00, maisVendido: true },
+          { id: 10, img: 'robo', categoria: 'casa', linhas: ['Robô Aspirador WAP', 'Robot W100 – Bivolt'], nota: 4.7, avaliacoes: 16208, preco: 699.90, precoAntigo: 999.90 },
+        ].map(p => ({ ...p, nome: p.linhas.join(' ') })),
+
+        get filtrados() {
+          const termo = normalizar(this.busca.trim());
+          return this.produtos.filter(p =>
+            (this.categoria === 'todas' || p.categoria === this.categoria) &&
+            (!termo || normalizar(p.nome).includes(termo)));
+        },
+        // Estrelas cheias arredondadas para baixo em meia estrela (4,7 a 4,9 → 4,5), como na imagem.
+        estrelas: nota => Math.floor(nota * 2) / 2,
+        desconto: p => Math.floor((1 - p.preco / p.precoAntigo) * 100),
+        icone(nome, classes, traco = 2) {
+          return `<i data-lucide="${nome}" class="${classes}" stroke-width="${traco}"></i>`;
+        },
+        alternarFavorito(id) {
+          this.favoritos = this.favoritos.includes(id) ? this.favoritos.filter(f => f !== id) : [...this.favoritos, id];
+        },
+        abrirOferta(p) {
+          this.aviso = `Abrindo "${p.nome}" na Amazon (simulação)`;
+          clearTimeout(this._t);
+          this._t = setTimeout(() => this.aviso = '', 2600);
+        },
+        init() {
+          this.$nextTick(() => lucide.createIcons());
+        },
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+  </script>
+</body>
+</html>
