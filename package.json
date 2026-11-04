@@ -1,0 +1,29 @@
+{
+  "name": "amazon-afiliados",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "test": "vitest run --passWithNoTests",
+    "lint": "biome check .",
+    "typecheck": "pnpm -r typecheck && tsc -p scripts/tsconfig.json",
+    "build": "pnpm -r build",
+    "backlog": "tsx scripts/backlog.ts",
+    "rastreabilidade": "tsx scripts/rastreabilidade.ts",
+    "db:migrate": "pnpm --filter @amazon-afiliados/db db:migrate",
+    "db:seed": "pnpm --filter @amazon-afiliados/db db:seed"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@types/node": "^22.0.0",
+    "concurrently": "^9.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.2.0"
+  }
+}

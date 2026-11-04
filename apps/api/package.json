@@ -1,0 +1,11 @@
+{
+  "name": "@amazon-afiliados/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo api: sem dev ainda",
+    "build": "echo api: sem build ainda",
+    "typecheck": "echo api: sem fontes ainda"
+  }
+}

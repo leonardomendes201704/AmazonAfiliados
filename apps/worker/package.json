@@ -1,0 +1,11 @@
+{
+  "name": "@amazon-afiliados/worker",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo worker: sem dev ainda",
+    "build": "echo worker: sem build ainda",
+    "typecheck": "echo worker: sem fontes ainda"
+  }
+}

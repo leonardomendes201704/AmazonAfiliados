@@ -1,0 +1,11 @@
+{
+  "name": "@amazon-afiliados/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo web: sem dev ainda",
+    "build": "echo web: sem build ainda",
+    "typecheck": "echo web: sem fontes ainda"
+  }
+}
