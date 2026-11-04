@@ -1,9 +1,9 @@
 ---
-name: status
+name: daily
 description: Daily do projeto. Mostra o andamento da sprint atual (histórias e tarefas por status, bloqueios e próximas tarefas prontas) lendo só os arquivos do backlog, sem delegar a subagentes. Use no início de toda sessão.
 ---
 
-# /status
+# /daily
 
 1. Se `scripts/backlog.ts` existir, rode `pnpm backlog status` e use a saída.
 2. Se não existir:

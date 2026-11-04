@@ -57,7 +57,7 @@
 
 | Skill | Quando | O que faz |
 |---|---|---|
-| `/status` | a qualquer momento (é a "daily") | mostra o resumo da sprint atual. Não delega |
+| `/daily` | a qualquer momento (início de toda sessão) | mostra o resumo da sprint atual. Não delega |
 | `/sprint-planejar [Sx]` | início da sprint | o `po-scrum` confere a DoR, monta o `Sx.md` e propõe a ordem; o PO aprova |
 | `/tarefa T-xx.y` | execução | ciclo do §7 |
 | `/sprint-revisar [Sx]` | fim da sprint | checks completos, demo guiada, aceite do PO, retro em 3 tópicos, rastreabilidade |

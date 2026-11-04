@@ -56,7 +56,7 @@ pnpm rastreabilidade                             # regenera docs/rastreabilidade
 ## Fluxo Scrum (detalhes em `docs/processo/scrum.md`)
 
 - **Papéis:** a sessão principal é o Scrum Master e orquestrador. O usuário é o Product Owner. Os subagentes de `.claude/agents/` são o time.
-- **Ciclo:** `/status` → `/sprint-planejar` → `/tarefa T-xx.y` (uma por vez, ou até 3 em paralelo se forem de apps diferentes) → `/sprint-revisar`.
+- **Ciclo:** `/daily` → `/sprint-planejar` → `/tarefa T-xx.y` (uma por vez, ou até 3 em paralelo se forem de apps diferentes) → `/sprint-revisar`.
 - **Uma sessão nova por sprint.** O estado vive em `docs/backlog/` e nada depende do histórico do chat.
 - **Tarefas `👤`** são do usuário: tag de afiliado, DNS, segredos, repositório no GitHub. O orquestrador só explica o que fazer e espera.
 

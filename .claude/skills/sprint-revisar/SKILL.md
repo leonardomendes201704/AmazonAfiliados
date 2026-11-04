@@ -21,4 +21,4 @@ argument-hint: "[Sx]"
 6. **Gere a matriz.** `pnpm rastreabilidade`, se existir, e informe os ⚠ (requisito sem história, tarefa sem evidência).
 7. **Lembretes:**
    - a partir da S5: teste mensal de restauração do backup (`scripts/testar-restauracao.sh`);
-   - recomende `/clear` e uma sessão nova para a próxima sprint, começando com `/status`.
+   - recomende `/clear` e uma sessão nova para a próxima sprint, começando com `/daily`.

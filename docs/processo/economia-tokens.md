@@ -70,8 +70,8 @@ O `qa-revisor` acrescenta `DEFEITOS: 1) ... 2) ...` quando reprova.
 
 ## 8. Sessões e compactação
 
-- Uma sessão nova por sprint (`/clear`), que começa com `/status`.
-- Se a sessão ficar longa no meio da sprint, encerre depois de um commit. Como o estado está nos arquivos, a próxima retoma com `/status`.
+- Uma sessão nova por sprint (`/clear`), que começa com `/daily`.
+- Se a sessão ficar longa no meio da sprint, encerre depois de um commit. Como o estado está nos arquivos, a próxima retoma com `/daily`.
 
 ## 9. Anti-padrões (não fazer)
 
