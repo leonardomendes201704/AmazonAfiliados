@@ -62,15 +62,15 @@ pnpm rastreabilidade                             # regenera docs/rastreabilidade
 
 ## Time
 
-| Agente | Modelo | Escopo |
-|---|---|---|
-| `po-scrum` | sonnet | backlog, histórias, sprints (só `docs/backlog/`) |
-| `arquiteto` | opus | ADRs, spikes, revisão transversal (uso raro) |
-| `dev-backend` | sonnet | `apps/api`, `packages/db`, `packages/shared` |
-| `dev-worker` | sonnet | `apps/worker` |
-| `dev-frontend` | sonnet | `apps/web` |
-| `devops` | sonnet | `infra/`, `.github/`, Dockerfiles, `scripts/deploy*` |
-| `qa-revisor` | haiku | verifica critérios, roda os checks e grava a evidência (não edita código de produto) |
+| Agente         | Modelo | Escopo                                                                               |
+| -------------- | ------ | ------------------------------------------------------------------------------------ |
+| `po-scrum`     | sonnet | backlog, histórias, sprints (só `docs/backlog/`)                                     |
+| `arquiteto`    | opus   | ADRs, spikes, revisão transversal (uso raro)                                         |
+| `dev-backend`  | sonnet | `apps/api`, `packages/db`, `packages/shared`                                         |
+| `dev-worker`   | sonnet | `apps/worker`                                                                        |
+| `dev-frontend` | sonnet | `apps/web`                                                                           |
+| `devops`       | sonnet | `infra/`, `.github/`, Dockerfiles, `scripts/deploy*`                                 |
+| `qa-revisor`   | haiku  | verifica critérios, roda os checks e grava a evidência (não edita código de produto) |
 
 ## Economia de tokens (obrigatório; regras completas em `docs/processo/economia-tokens.md`)
 
