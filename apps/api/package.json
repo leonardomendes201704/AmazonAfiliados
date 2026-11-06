@@ -4,8 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "echo api: sem dev ainda",
-    "build": "echo api: sem build ainda",
-    "typecheck": "echo api: sem fontes ainda"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/helmet": "^13.2.0",
+    "@fastify/swagger": "^9.9.3",
+    "@fastify/swagger-ui": "^6.1.3",
+    "fastify": "^5.12.8",
+    "fastify-plugin": "^6.0.1",
+    "fastify-type-provider-zod": "^7.0.0",
+    "pino": "^10.4.0",
+    "zod": "^4.6.7"
   }
 }
