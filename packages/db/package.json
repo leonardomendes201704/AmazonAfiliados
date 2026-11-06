@@ -8,7 +8,14 @@
     "dev": "echo db: sem dev",
     "build": "tsc -p tsconfig.json --noEmit",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "db:migrate": "echo db:migrate placeholder",
-    "db:seed": "echo db:seed placeholder"
+    "db:migrate": "tsx src/migrate.ts",
+    "db:seed": "tsx src/seed.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.4",
+    "postgres": "^4.1.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11"
   }
 }
