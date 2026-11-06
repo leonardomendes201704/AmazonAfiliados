@@ -31,7 +31,7 @@
 | US-01 | Monorepo e scripts de processo | EP-01 | P0 | S1 | M | dev-backend | Done |
 | US-02 | Ambiente de desenvolvimento com Docker | EP-01 | P0 | S1 | P | devops | Doing |
 | US-03 | CI no GitHub Actions | EP-01 | P0 | S1 | P | devops 👤 | Done |
-| US-04 | Schema, migrações, seed e regras compartilhadas | EP-02 | P0 | S1 | M | dev-backend | Todo |
+| US-04 | Schema, migrações, seed e regras compartilhadas | EP-02 | P0 | S1 | M | dev-backend | Done |
 | US-05 | Spike: estrutura da página de Mais Vendidos | EP-03 | P0 | S2 | M | arquiteto | Todo |
 | US-06 | Fetcher educado com detecção de bloqueio | EP-03 | P0 | S2 | M | dev-worker | Todo |
 | US-07 | Parser da lista de Mais Vendidos | EP-03 | P0 | S2 | M | dev-worker | Todo |
