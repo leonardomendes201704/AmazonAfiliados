@@ -1,5 +1,7 @@
+import { fileURLToPath } from "node:url";
 import { eq, like, sql } from "drizzle-orm";
-import { afterAll, expect, it } from "vitest";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { afterAll, beforeAll, expect, it } from "vitest";
 import {
   categories,
   category_products,
@@ -15,6 +17,11 @@ if (!url) throw new Error("DATABASE_URL_TEST requisitada para os testes de integ
 if (!new URL(url).pathname.endsWith("/amazonafiliados_test"))
   throw new Error("Use somente o banco amazonafiliados_test.");
 const { db, client } = createDatabase(url);
+beforeAll(async () => {
+  await migrate(db, {
+    migrationsFolder: fileURLToPath(new URL("../drizzle", import.meta.url)),
+  });
+}, 60_000);
 afterAll(async () => {
   await client.end();
 });
