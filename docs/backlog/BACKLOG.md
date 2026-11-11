@@ -29,16 +29,16 @@
 | ID | História | Épico | Prio | Sprint | Est. | Agente(s) | Status |
 |---|---|---|---|---|---|---|---|
 | US-01 | Monorepo e scripts de processo | EP-01 | P0 | S1 | M | dev-backend | Done |
-| US-02 | Ambiente de desenvolvimento com Docker | EP-01 | P0 | S1 | P | devops | Doing |
+| US-02 | Ambiente de desenvolvimento com Docker | EP-01 | P0 | S1 | P | devops | Done |
 | US-03 | CI no GitHub Actions | EP-01 | P0 | S1 | P | devops 👤 | Done |
 | US-04 | Schema, migrações, seed e regras compartilhadas | EP-02 | P0 | S1 | M | dev-backend | Done |
-| US-05 | Spike: estrutura da página de Mais Vendidos | EP-03 | P0 | S2 | M | arquiteto | Todo |
+| US-05 | Spike: estrutura da página de Mais Vendidos | EP-03 | P0 | S2 | M | arquiteto | Doing |
 | US-06 | Fetcher educado com detecção de bloqueio | EP-03 | P0 | S2 | M | dev-worker | Todo |
 | US-07 | Parser da lista de Mais Vendidos | EP-03 | P0 | S2 | M | dev-worker | Todo |
 | US-08 | Persistência da coleta | EP-03 | P0 | S2 | M | dev-worker | Todo |
 | US-09 | Agendamento, coleta manual e limpeza | EP-03 | P0 | S2 | P | dev-worker | Todo |
 | US-10 | Enriquecimento: preço de lista e desconto | EP-03 | P0 | S3 | M | dev-worker | Todo |
-| US-11 | API pública do catálogo | EP-04 | P0 | S2 | M | dev-backend | Todo |
+| US-11 | API pública do catálogo | EP-04 | P0 | S2 | M | dev-backend | Doing |
 | US-12 | Saída para a Amazon com tag e registro de clique | EP-04 | P0 | S3 | P | dev-backend | Todo |
 | US-13 | Layout base da vitrine a partir do protótipo | EP-05 | P0 | S3 | M | dev-frontend | Todo |
 | US-14 | Card de produto completo | EP-05 | P0 | S3 | M | dev-frontend | Todo |
