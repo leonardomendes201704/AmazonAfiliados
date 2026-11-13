@@ -4,9 +4,6 @@
 
 ## Lacunas
 
-- US-02: história sem evidência (3 tarefas)
-- US-03: história sem evidência (1 tarefas)
-- US-04: história sem evidência (4 tarefas)
 - US-05: história sem evidência (3 tarefas)
 - US-06: história sem evidência (3 tarefas)
 - US-07: história sem evidência (3 tarefas)
@@ -39,10 +36,11 @@
 
 | Requisito | História | Tarefa | Evidência | Commits |
 |---|---|---|---|---|
-| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.1 (Todo) | ⚠ sem evidência | - |
-| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.2 (Todo) | ⚠ sem evidência | - |
-| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.3 (Todo) | ⚠ sem evidência | - |
-| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.4 (Todo) | ⚠ sem evidência | - |
+| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.1 (Done) | 2026-11-06 0f71727 | - |
+| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.2 (Done) | 2026-11-06 0f71727 | - |
+| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.3 (Done) | 2026-11-06 0f71727 | - |
+| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.4 (Done) | 2026-11-06 0f71727 | - |
+| RF-01 A vitrine lista os mais vendidos de cada categoria | US-04 | T-04.5 (Done) | 2026-11-11 668948d | 668948d, 1c8b0a1 |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-07 | T-07.1 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-07 | T-07.2 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-07 | T-07.3 (Todo) | ⚠ sem evidência | - |
@@ -51,8 +49,8 @@
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-08 | T-08.3 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-10 | T-10.1 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-10 | T-10.2 (Todo) | ⚠ sem evidência | - |
-| RF-01 A vitrine lista os mais vendidos de cada categoria | US-11 | T-11.1 (Todo) | ⚠ sem evidência | - |
-| RF-01 A vitrine lista os mais vendidos de cada categoria | US-11 | T-11.2 (Todo) | ⚠ sem evidência | - |
+| RF-01 A vitrine lista os mais vendidos de cada categoria | US-11 | T-11.1 (Done) | bloqueada desde 2026-11-06: **Resolvido:** escopo ampliado pelo PO para permitir dependências e conexão do bootstrap ao comando `dev`. Implementação e aprovação QA em andamento. | f310163, 19737e9 |
+| RF-01 A vitrine lista os mais vendidos de cada categoria | US-11 | T-11.2 (Blocked) | bloqueada desde 2026-11-09: Rotas implementadas; falta autorizar apps/api/src/app.ts no escopo para registrar os endpoints no bootstrap e executar validacao integrada. | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-11 | T-11.3 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-11 | T-11.4 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-13 | T-13.1 (Todo) | ⚠ sem evidência | - |
@@ -65,8 +63,8 @@
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-28 | T-28.1 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-28 | T-28.2 (Todo) | ⚠ sem evidência | - |
 | RF-01 A vitrine lista os mais vendidos de cada categoria | US-28 | T-28.3 (Todo) | n/a 👤 | - |
-| RF-02 A vitrine filtra por categoria, busca por nome, aplica os filtros Mais Vendidos, Em Oferta e Bem Avaliados e a faixa de preço | US-11 | T-11.1 (Todo) | ⚠ sem evidência | - |
-| RF-02 A vitrine filtra por categoria, busca por nome, aplica os filtros Mais Vendidos, Em Oferta e Bem Avaliados e a faixa de preço | US-11 | T-11.2 (Todo) | ⚠ sem evidência | - |
+| RF-02 A vitrine filtra por categoria, busca por nome, aplica os filtros Mais Vendidos, Em Oferta e Bem Avaliados e a faixa de preço | US-11 | T-11.1 (Done) | bloqueada desde 2026-11-06: **Resolvido:** escopo ampliado pelo PO para permitir dependências e conexão do bootstrap ao comando `dev`. Implementação e aprovação QA em andamento. | f310163, 19737e9 |
+| RF-02 A vitrine filtra por categoria, busca por nome, aplica os filtros Mais Vendidos, Em Oferta e Bem Avaliados e a faixa de preço | US-11 | T-11.2 (Blocked) | bloqueada desde 2026-11-09: Rotas implementadas; falta autorizar apps/api/src/app.ts no escopo para registrar os endpoints no bootstrap e executar validacao integrada. | - |
 | RF-02 A vitrine filtra por categoria, busca por nome, aplica os filtros Mais Vendidos, Em Oferta e Bem Avaliados e a faixa de preço | US-11 | T-11.3 (Todo) | ⚠ sem evidência | - |
 | RF-02 A vitrine filtra por categoria, busca por nome, aplica os filtros Mais Vendidos, Em Oferta e Bem Avaliados e a faixa de preço | US-11 | T-11.4 (Todo) | ⚠ sem evidência | - |
 | RF-02 A vitrine filtra por categoria, busca por nome, aplica os filtros Mais Vendidos, Em Oferta e Bem Avaliados e a faixa de preço | US-15 | T-15.1 (Todo) | ⚠ sem evidência | - |
@@ -83,7 +81,7 @@
 | RF-03 "Ver na Amazon" leva ao produto com a tag de afiliado, passando por `/r/:asin` | US-28 | T-28.1 (Todo) | ⚠ sem evidência | - |
 | RF-03 "Ver na Amazon" leva ao produto com a tag de afiliado, passando por `/r/:asin` | US-28 | T-28.2 (Todo) | ⚠ sem evidência | - |
 | RF-03 "Ver na Amazon" leva ao produto com a tag de afiliado, passando por `/r/:asin` | US-28 | T-28.3 (Todo) | n/a 👤 | - |
-| RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-05 | T-05.1 (Todo) | ⚠ sem evidência | - |
+| RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-05 | T-05.1 (Blocked) | bloqueada desde 2026-11-06: Acesso a URL indisponivel nesta execucao; coleta e fixtures reais ainda nao validadas | - |
 | RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-05 | T-05.2 (Todo) | ⚠ sem evidência | - |
 | RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-05 | T-05.3 (Todo) | ⚠ sem evidência | - |
 | RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-06 | T-06.1 (Todo) | ⚠ sem evidência | - |
@@ -98,10 +96,11 @@
 | RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-28 | T-28.1 (Todo) | ⚠ sem evidência | - |
 | RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-28 | T-28.2 (Todo) | ⚠ sem evidência | - |
 | RF-04 Um worker coleta as páginas públicas de Mais Vendidos por categoria, sem API, numa agenda configurável | US-28 | T-28.3 (Todo) | n/a 👤 | - |
-| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.1 (Todo) | ⚠ sem evidência | - |
-| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.2 (Todo) | ⚠ sem evidência | - |
-| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.3 (Todo) | ⚠ sem evidência | - |
-| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.4 (Todo) | ⚠ sem evidência | - |
+| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.1 (Done) | 2026-11-06 0f71727 | - |
+| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.2 (Done) | 2026-11-06 0f71727 | - |
+| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.3 (Done) | 2026-11-06 0f71727 | - |
+| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.4 (Done) | 2026-11-06 0f71727 | - |
+| RF-05 Cada coleta guarda o histórico de posição e de preço | US-04 | T-04.5 (Done) | 2026-11-11 668948d | 668948d, 1c8b0a1 |
 | RF-05 Cada coleta guarda o histórico de posição e de preço | US-08 | T-08.1 (Todo) | ⚠ sem evidência | - |
 | RF-05 Cada coleta guarda o histórico de posição e de preço | US-08 | T-08.2 (Todo) | ⚠ sem evidência | - |
 | RF-05 Cada coleta guarda o histórico de posição e de preço | US-08 | T-08.3 (Todo) | ⚠ sem evidência | - |
@@ -110,12 +109,13 @@
 | RF-05 Cada coleta guarda o histórico de posição e de preço | US-28 | T-28.1 (Todo) | ⚠ sem evidência | - |
 | RF-05 Cada coleta guarda o histórico de posição e de preço | US-28 | T-28.2 (Todo) | ⚠ sem evidência | - |
 | RF-05 Cada coleta guarda o histórico de posição e de preço | US-28 | T-28.3 (Todo) | n/a 👤 | - |
-| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.1 (Todo) | ⚠ sem evidência | - |
-| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.2 (Todo) | ⚠ sem evidência | - |
-| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.3 (Todo) | ⚠ sem evidência | - |
-| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.4 (Todo) | ⚠ sem evidência | - |
-| RF-06 O preço aparece com a data e a hora da coleta | US-11 | T-11.1 (Todo) | ⚠ sem evidência | - |
-| RF-06 O preço aparece com a data e a hora da coleta | US-11 | T-11.2 (Todo) | ⚠ sem evidência | - |
+| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.1 (Done) | 2026-11-06 0f71727 | - |
+| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.2 (Done) | 2026-11-06 0f71727 | - |
+| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.3 (Done) | 2026-11-06 0f71727 | - |
+| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.4 (Done) | 2026-11-06 0f71727 | - |
+| RF-06 O preço aparece com a data e a hora da coleta | US-04 | T-04.5 (Done) | 2026-11-11 668948d | 668948d, 1c8b0a1 |
+| RF-06 O preço aparece com a data e a hora da coleta | US-11 | T-11.1 (Done) | bloqueada desde 2026-11-06: **Resolvido:** escopo ampliado pelo PO para permitir dependências e conexão do bootstrap ao comando `dev`. Implementação e aprovação QA em andamento. | f310163, 19737e9 |
+| RF-06 O preço aparece com a data e a hora da coleta | US-11 | T-11.2 (Blocked) | bloqueada desde 2026-11-09: Rotas implementadas; falta autorizar apps/api/src/app.ts no escopo para registrar os endpoints no bootstrap e executar validacao integrada. | - |
 | RF-06 O preço aparece com a data e a hora da coleta | US-11 | T-11.3 (Todo) | ⚠ sem evidência | - |
 | RF-06 O preço aparece com a data e a hora da coleta | US-11 | T-11.4 (Todo) | ⚠ sem evidência | - |
 | RF-06 O preço aparece com a data e a hora da coleta | US-14 | T-14.1 (Todo) | ⚠ sem evidência | - |
@@ -186,7 +186,7 @@
 | RF-13 Favoritos no navegador (coração no card), guardados no `localStorage` | US-28 | T-28.1 (Todo) | ⚠ sem evidência | - |
 | RF-13 Favoritos no navegador (coração no card), guardados no `localStorage` | US-28 | T-28.2 (Todo) | ⚠ sem evidência | - |
 | RF-13 Favoritos no navegador (coração no card), guardados no `localStorage` | US-28 | T-28.3 (Todo) | n/a 👤 | - |
-| RNF-01 Coleta educada | US-05 | T-05.1 (Todo) | ⚠ sem evidência | - |
+| RNF-01 Coleta educada | US-05 | T-05.1 (Blocked) | bloqueada desde 2026-11-06: Acesso a URL indisponivel nesta execucao; coleta e fixtures reais ainda nao validadas | - |
 | RNF-01 Coleta educada | US-05 | T-05.2 (Todo) | ⚠ sem evidência | - |
 | RNF-01 Coleta educada | US-05 | T-05.3 (Todo) | ⚠ sem evidência | - |
 | RNF-01 Coleta educada | US-06 | T-06.1 (Todo) | ⚠ sem evidência | - |
@@ -215,9 +215,9 @@
 | RNF-06 LGPD | US-12 | T-12.2 (Todo) | ⚠ sem evidência | - |
 | RNF-06 LGPD | US-17 | T-17.1 (Todo) | ⚠ sem evidência | - |
 | RNF-06 LGPD | US-17 | T-17.2 (Todo) | ⚠ sem evidência | - |
-| RNF-07 Operação | US-02 | T-02.1 (Todo) | ⚠ sem evidência | - |
-| RNF-07 Operação | US-02 | T-02.2 (Todo) | ⚠ sem evidência | - |
-| RNF-07 Operação | US-02 | T-02.3 (Todo) | ⚠ sem evidência | - |
+| RNF-07 Operação | US-02 | T-02.1 (Done) | 2026-11-11 da4fc66 | da4fc66 |
+| RNF-07 Operação | US-02 | T-02.2 (Done) | 2026-11-11 d6d44d0 | d6d44d0 |
+| RNF-07 Operação | US-02 | T-02.3 (Done) | 2026-11-11 6a3288e | 6a3288e, 3d5051c |
 | RNF-07 Operação | US-22 | T-22.1 (Todo) | ⚠ sem evidência | - |
 | RNF-07 Operação | US-22 | T-22.2 (Todo) | ⚠ sem evidência | - |
 | RNF-07 Operação | US-22 | T-22.3 (Todo) | ⚠ sem evidência | - |
@@ -235,13 +235,13 @@
 | RNF-08 Resiliência | US-08 | T-08.1 (Todo) | ⚠ sem evidência | - |
 | RNF-08 Resiliência | US-08 | T-08.2 (Todo) | ⚠ sem evidência | - |
 | RNF-08 Resiliência | US-08 | T-08.3 (Todo) | ⚠ sem evidência | - |
-| RNF-08 Resiliência | US-11 | T-11.1 (Todo) | ⚠ sem evidência | - |
-| RNF-08 Resiliência | US-11 | T-11.2 (Todo) | ⚠ sem evidência | - |
+| RNF-08 Resiliência | US-11 | T-11.1 (Done) | bloqueada desde 2026-11-06: **Resolvido:** escopo ampliado pelo PO para permitir dependências e conexão do bootstrap ao comando `dev`. Implementação e aprovação QA em andamento. | f310163, 19737e9 |
+| RNF-08 Resiliência | US-11 | T-11.2 (Blocked) | bloqueada desde 2026-11-09: Rotas implementadas; falta autorizar apps/api/src/app.ts no escopo para registrar os endpoints no bootstrap e executar validacao integrada. | - |
 | RNF-08 Resiliência | US-11 | T-11.3 (Todo) | ⚠ sem evidência | - |
 | RNF-08 Resiliência | US-11 | T-11.4 (Todo) | ⚠ sem evidência | - |
 | RNF-09 Desenvolvimento rastreável e econômico | US-01 | T-01.1 (Done) | 2026-11-04 7a384e7 | 7a384e7 |
 | RNF-09 Desenvolvimento rastreável e econômico | US-01 | T-01.2 (Done) | 2026-11-04 26c7130 | 26c7130 |
 | RNF-09 Desenvolvimento rastreável e econômico | US-01 | T-01.3 (Done) | 2026-11-04 a35f380 | a35f380 |
-| RNF-09 Desenvolvimento rastreável e econômico | US-01 | T-01.4 (Doing) | 2026-11-05 (sha pendente) | - |
-| RNF-09 Desenvolvimento rastreável e econômico | US-03 | T-03.1 (Todo) | ⚠ sem evidência | - |
+| RNF-09 Desenvolvimento rastreável e econômico | US-01 | T-01.4 (Done) | 2026-11-05 f750b63 | f750b63 |
+| RNF-09 Desenvolvimento rastreável e econômico | US-03 | T-03.1 (Done) | 2026-11-05 38740bb | 38740bb, c3e35b4 |
 | RNF-09 Desenvolvimento rastreável e econômico | US-03 | T-03.2 (Done) | 2026-11-04 3a82018 | c832d54 |
